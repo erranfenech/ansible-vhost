@@ -1,0 +1,12 @@
+---
+  - name: create virtual host
+    template: src=virtualhost80.php.j2 dest=/etc/httpd/vhost.d/{{ domainname }}.conf
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    notify:
+      - reload httpd
+    tags:
+       - create-vhost
+
+  - name: create DocumentRoot for domain
+    file: path={{ documentroot }} owner={{ owner }} group={{ group }} state=directory
+

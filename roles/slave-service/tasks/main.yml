@@ -1,0 +1,9 @@
+---
+  - name: Check Lsync Replication of Virtual Host for domain
+    wait_for: path=/etc/httpd/vhost.d/{{ domainname }}.conf state=present delay=10
+
+  - name: Check Lsync Replication of DocumentRoot for domain
+    wait_for: path={{ documentroot }} state=present
+
+  - name: reload httpd
+    service: name=httpd state=reloaded

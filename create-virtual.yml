@@ -1,0 +1,28 @@
+---
+-  hosts: all
+   vars_prompt:
+    - name: "Dname"
+      prompt: "Name of Domain"
+      private: no
+
+    - name: "Droot"
+      prompt: "DocumentRoot"
+      private: no
+
+   tasks:
+    - set_fact:
+        domainname: "{{Dname}}"
+        documentroot: "{{Droot}}"
+
+
+-  hosts: MasterWebserver
+   roles:
+    - apache-virtualhost
+   vars:
+    - owner: digitalrestaurant
+    - group: digitalrestaurant
+
+
+-  hosts: SlaveWebserver
+   roles:
+    - slave-service
